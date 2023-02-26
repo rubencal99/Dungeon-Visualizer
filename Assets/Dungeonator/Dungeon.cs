@@ -15,7 +15,7 @@ public class Dungeon : MonoBehaviour
     {
         GenerateMap();
         Debug.Log("After Generate Map");
-        Physics.SyncTransforms();
+        //Physics.SyncTransforms();
         //AstarPath.active.Scan();
     }
 
@@ -29,7 +29,7 @@ public class Dungeon : MonoBehaviour
         }*/
     }
 
-    void GenerateMap()
+    public void GenerateMap()
     {
         map = BSP.GenerateMap();
     }

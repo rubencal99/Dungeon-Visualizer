@@ -43,7 +43,8 @@ public class RoomNode : MonoBehaviour
 
     public RoomNode()
     {
-
+        obstacleTileList = new List<TileNode>();
+        validTileList = new List<TileNode>();
     }
 
     public RoomNode(string roomType)

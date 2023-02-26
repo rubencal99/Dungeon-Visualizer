@@ -95,7 +95,7 @@ public static class Helper
     public static CorridorNode CreatePassage(RoomNode roomA, RoomNode roomB, TileNode tileA, TileNode tileB, ref TileNode[,] map)
     {
         // RoomNode.ConnectRooms(roomA, roomB);
-        Debug.DrawLine(TileNodeToWorldPoint(tileA, ref map), TileNodeToWorldPoint(tileB, ref map), Color.green, 1);
+        //Debug.DrawLine(TileNodeToWorldPoint(tileA, ref map), TileNodeToWorldPoint(tileB, ref map), Color.green, 50);
 
         List<TileNode> line = GetLine(tileA, tileB, ref map);
 
@@ -125,6 +125,7 @@ public static class Helper
             return null;
         }
 
+        Debug.DrawLine(TileNodeToWorldPoint(tileA, ref map), TileNodeToWorldPoint(tileB, ref map), Color.green, 50);
         return corridor;
     }
 
