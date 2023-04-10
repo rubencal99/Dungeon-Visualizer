@@ -125,7 +125,9 @@ public static class Helper
             return null;
         }
 
-        Debug.DrawLine(TileNodeToWorldPoint(tileA, ref map), TileNodeToWorldPoint(tileB, ref map), Color.green, 50);
+        if(MapGenerator.instance.debugPartition)
+            Debug.DrawLine(TileNodeToWorldPoint(tileA, ref map), TileNodeToWorldPoint(tileB, ref map), Color.green, 25);
+
         return corridor;
     }
 
