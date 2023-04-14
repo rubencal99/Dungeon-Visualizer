@@ -8,14 +8,19 @@ using UnityEditor;
 
 public class MapGenerator : MonoBehaviour
 {
+    public static MapGenerator instance;
+    void Start(){ instance = this; }
+
     [SerializeField]
     private GameObject Grid;
     [SerializeField]
     private GameObject DungeonRooms;
     [SerializeField]
+    private bool StepThrough;
+    [SerializeField]
     private bool debug;
     [SerializeField]
-    private bool debugPartition;
+    public bool debugPartition;
     [SerializeField]
     private bool forceEntry = false;
     [SerializeField]
@@ -516,12 +521,26 @@ public class MapGenerator : MonoBehaviour
             NewRoom.transform.parent = DungeonRooms.transform;
             Rooms.Add(NewRoom);
             tempCount++;
+
+            StartCoroutine(Delay());
         }
 
         SortRooms();
         AddCorridors();
         AddEndRoom();
         return;
+    }
+
+    IEnumerator Delay()
+    {
+        this.enabled = false;
+        Debug.Log("Before yield");
+        while(!Input.GetMouseButtonDown(0))
+        {
+            yield return null;
+        }
+        Debug.Log("After yield");
+        this.enabled = true;
     }
 
     /*
@@ -677,11 +696,13 @@ public class MapGenerator : MonoBehaviour
             foreach (RoomNode neighbor in room.RoomsByDistance)
             {
                 ConnectRooms(room, neighbor, forceEntry);
+                //StartCoroutine(Delay());
             }
         }
 
         // Second pass in case rooms or sections aren't accessible from start
-        foreach (RoomNode room in StartRoom.RoomsByDistance)
+        // NOTE: This is what creates doubly-connected rooms
+        /*foreach (RoomNode room in StartRoom.RoomsByDistance)
         {
             if (room.isAccessibleFromStart)
             {
@@ -691,7 +712,7 @@ public class MapGenerator : MonoBehaviour
             {
                 ConnectRooms(room, neighbor, true);
             }
-        }
+        }*/
 
         AddDistanceFromStart();
     }
@@ -774,7 +795,7 @@ public class MapGenerator : MonoBehaviour
         if (debugPartition)
         {
             //Debug.DrawLine(new Vector3(x1, 4, ySplit), new Vector3(x2, 4, ySplit), Color.green, 5);
-            Debug.DrawLine(new Vector3(x1, ySplit, 4), new Vector3(x2, ySplit, 4), Color.green, 50);
+            Debug.DrawLine(new Vector3(x1, ySplit, 4), new Vector3(x2, ySplit, 4), Color.green, 25);
         }
             
 

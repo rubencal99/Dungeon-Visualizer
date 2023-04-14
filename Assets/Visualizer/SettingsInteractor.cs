@@ -81,4 +81,37 @@ public class SettingsInteractor : MonoBehaviour
         }
     }
 
+
+    [SerializeField]
+    private float width;
+    [SerializeField]
+    private Text widthText;
+
+    public float Width
+    {
+        get { return width; }
+        set 
+        { 
+            width = (int)value; 
+            widthText.text = "Width: " + (int)value;
+            mapGenerator.columns = (int)value;
+        }
+    }
+
+    [SerializeField]
+    private float height;
+    [SerializeField]
+    private Text heightText;
+
+    public float Height
+    {
+        get { return height; }
+        set 
+        { 
+            height = (int)value; 
+            heightText.text = "Height: " + (int)value;
+            mapGenerator.rows = (int)value;
+        }
+    }
+
 }
