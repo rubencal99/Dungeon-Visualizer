@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Dungeon : MonoBehaviour
 {
-    TileNode[,] map;
-    public MapGenerator BSP;
+    //TileNode[,] map;
+    Map map;
+    //public MapGenerator mapGenerator;
 
     public bool trim;
     public bool connect;
@@ -31,6 +32,12 @@ public class Dungeon : MonoBehaviour
 
     public void GenerateMap()
     {
-        map = BSP.GenerateMap();
+        //Map.NewMap();
+        map = new Map();
+    }
+
+    public void GenerateCorridors()
+    {
+
     }
 }

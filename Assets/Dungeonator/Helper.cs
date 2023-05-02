@@ -6,7 +6,7 @@ using System.Linq;
 
 public static class Helper
 {
-    public static int passageSize = 2;
+    /*public static int passageSize = 2;
     public static CorridorNode CreateCorridor(RoomNode roomA, RoomNode roomB, TileNode tileA, TileNode tileB, ref TileNode[,] map)
     {
         TileNode meetPoint;
@@ -130,14 +130,16 @@ public static class Helper
 
         return corridor;
     }
-
+    */
     // this function merges all the Connected Rooms of both rooms together 
+    /*
     public static void MergeNeighbors(RoomNode roomA, RoomNode roomB)
     {
         roomA.ConnectedRooms.Union<RoomNode>(roomB.ConnectedRooms);
         roomB.ConnectedRooms.Union<RoomNode>(roomA.ConnectedRooms);
     }
-
+    */
+    /*
     public static void DrawCircle(List<TileNode> tileList, TileNode c, int r, ref TileNode[,] map)
     {
         for (int x = -r; x <= r; x++)
@@ -218,7 +220,7 @@ public static class Helper
                 break;
             }*/
 
-            if (inverted)
+  /*          if (inverted)
             {
                 y += step;
             }
@@ -246,5 +248,5 @@ public static class Helper
     public static Vector3 TileNodeToWorldPoint(TileNode tile, ref TileNode[,] map)
     {
         return new Vector3(tile.x, tile.y, 0);
-    }
+    }*/
 }
