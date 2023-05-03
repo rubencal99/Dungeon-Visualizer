@@ -15,6 +15,7 @@ public static class CorridorGenerator
     }
     public static void AddCorridors(Map map)
     {
+        map.ShuffleRooms();
         //Debug.Log("Rooms count in AddCorridors: " + map.Rooms.Count);
         foreach (RoomNode room in map.Rooms)
         {

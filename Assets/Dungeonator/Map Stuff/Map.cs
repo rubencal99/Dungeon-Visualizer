@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Map
 {
@@ -140,6 +141,20 @@ public class Map
         foreach(RoomNode room in Rooms)
         {
             room.RemoveCorridors();
+        }
+    }
+
+    public void ShuffleRooms()
+    {
+        Debug.Log("Shuffling Rooms");
+        int n = Rooms.Count;
+        for(int i = 0; i < n; i++)
+        {
+            int r = i + Random.Range(0, n - i);
+
+            RoomNode temp = Rooms[r];
+            Rooms[r] = Rooms[i];
+            Rooms[i] = temp;
         }
     }
 

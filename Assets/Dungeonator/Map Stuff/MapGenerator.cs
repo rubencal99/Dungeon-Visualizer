@@ -193,6 +193,9 @@ public static class MapGenerator
         CorridorGenerator.AddCorridors(Map);
         Debug.Log("Add Corridors Complete");
 
+        RoomGenerator.AddEndRoom(Map);
+        Debug.Log("Add End Room Complete");
+
         Debug.Log("Num Corridors: " + Map.Corridors.Count);
         Debug.Log("////// ENDING CORRIDOR GENERATION //////");
         Debug.Log("");

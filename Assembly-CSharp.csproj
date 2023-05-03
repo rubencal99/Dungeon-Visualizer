@@ -60,18 +60,18 @@
     <Compile Include="Assets\Dungeonator\Rooms\RoomNode.cs" />
     <Compile Include="Assets\Dungeonator\Helper.cs" />
     <Compile Include="Assets\Dungeonator\Rooms\Static Rooms\NormalRooms.cs" />
-    <Compile Include="Assets\Dungeonator\Dungeon.cs" />
+    <Compile Include="Assets\Dungeonator\DungeonGenerator.cs" />
     <Compile Include="Assets\Dungeonator\Map Stuff\BinarySpace.cs" />
     <Compile Include="Assets\Dungeonator\Rooms\RoomGenerator.cs" />
     <Compile Include="Assets\Dungeonator\Map Stuff\BSP.cs" />
     <Compile Include="Assets\Dungeonator\Map Stuff\MapGenerator.cs" />
     <Compile Include="Assets\Dungeonator\Corridors\CorridorGenerator.cs" />
     <Compile Include="Assets\Dungeonator\Rooms\Static Rooms\AuxiliaryRooms.cs" />
+    <Compile Include="Assets\Dungeonator\Rooms\TestClass.cs" />
     <Compile Include="Assets\Dungeonator\Corridors\CorridorNode.cs" />
     <Compile Include="Assets\Dungeonator\TileNode.cs" />
     <Compile Include="Assets\Dungeonator\Rooms\Static Rooms\RewardRooms.cs" />
     <Compile Include="Assets\Dungeonator\Map Stuff\Settings.cs" />
-    <Compile Include="Assets\Dungeonator\Rooms\TestClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
