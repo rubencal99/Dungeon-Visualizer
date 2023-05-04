@@ -100,6 +100,8 @@ public static class RoomGenerator
                 NewRoom.MaxNeighbors = 3;
             }
 
+            NewRoom.stringRepresentation = tempString;
+            NewRoom.PreviousRoomType = NewRoom.RoomType;
             // Here we fill the negative space with empty space 
             // I.e. room creation
             if (roomType == "Normal" || roomType == "Reward" || roomType == "Auxiliary")
@@ -180,6 +182,50 @@ public static class RoomGenerator
         SortRooms(map);
     }
 
+    /*public static void StringToTiles(RoomNode NewRoom, Map map)
+    {
+        for (int i = 0; i < NewRoom.length; i++)
+        {
+            for (int j = 0; j < NewRoom.width; j++)
+            {
+                // Here is where we'd want to randomly choose from a static list
+                if (int.TryParse(tempString[i, j], out int result))
+                {
+                    map.map[x1 + i, y1 + j].value = result;
+                    if (result == 1)
+                    {
+                        map.map[x1 + i, y1 + j].room = NewRoom;
+                        map.roomTiles.Add(map.map[x1 + i, y1 + j]);
+                        NewRoom.validTileList.Add(map.map[x1 + i, y1 + j]);
+                    }
+                    NewRoom.tileList[i, j] = map.map[x1 + i, y1 + j];
+                    NewRoom.tileCount++;
+                }
+                else if (tempString[i, j] == "e")
+                {
+                    NewRoom.Entrances.Add(new Vector2Int(x1 + i, y1 + j));
+                    map.map[x1 + i, y1 + j].value = 1;
+                    map.map[x1 + i, y1 + j].room = NewRoom;
+                    map.roomTiles.Add(map.map[x1 + i, y1 + j]);
+                    NewRoom.tileList[i, j] = map.map[x1 + i, y1 + j];
+                    NewRoom.tileCount++;
+                }
+                else
+                {
+                    map.map[x1 + i, y1 + j].value = 1;
+                    map.map[x1 + i, y1 + j].obstacleValue = tempString[i, j];
+                    map.map[x1 + i, y1 + j].isObstacle = true;
+                    map.map[x1 + i, y1 + j].room = NewRoom;
+                    map.roomTiles.Add(map.map[x1 + i, y1 + j]);
+                    NewRoom.tileList[i, j] = map.map[x1 + i, y1 + j];
+                    NewRoom.tileCount++;
+                    NewRoom.obstacleTileList.Add(map.map[x1 + i, y1 + j]);
+
+                }
+            }
+        }
+    }*/
+
     // This function sorts all Rooms according to their distance from eachother
     // This helps with optimizing corridor creation
     public static void SortRooms(Map map)
@@ -251,8 +297,8 @@ public static class RoomGenerator
         {
             map.EndRoom.RoomType = "Key";
         }
-        map.EndRoom.RepurposeRoom(ref map.map, ref map.roomTiles);
-
+        map.EndRoom.RepurposeRoom(ref map);
+        map.SpecialRooms.Add(map.EndRoom);
 
         //---------------- SHOP ----------------
         RoomNode shop = null;
@@ -277,7 +323,8 @@ public static class RoomGenerator
         }
         shop.RoomType = "Shop";
         map.ShopRoom = shop;
-        map.ShopRoom.RepurposeRoom(ref map.map, ref map.roomTiles);
+        map.ShopRoom.RepurposeRoom(ref map);
+        map.SpecialRooms.Add(map.ShopRoom);
         //---------------- DOOR ----------------
         if (!map.isBossLevel)
         {
@@ -296,7 +343,8 @@ public static class RoomGenerator
             }
             door.RoomType = "Door";
             map.DoorRoom = door;
-            map.DoorRoom.RepurposeRoom(ref map.map, ref map.roomTiles);
+            map.DoorRoom.RepurposeRoom(ref map);
+            map.SpecialRooms.Add(map.DoorRoom);
         }
 
         //Debug.Log("Map: " + map);

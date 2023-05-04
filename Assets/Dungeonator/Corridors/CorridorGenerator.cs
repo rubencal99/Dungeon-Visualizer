@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public static class CorridorGenerator
     public static void EraseCorridors(Map map)
     {
         map.ClearCorridors();
+        map.RepurposeSpecialRooms();
     }
     public static void AddCorridors(Map map)
     {

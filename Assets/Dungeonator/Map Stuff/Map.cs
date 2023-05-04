@@ -10,9 +10,11 @@ public class Map
 
     // Queues for the BSP algorithm
     public List<TileNode> roomTiles = new List<TileNode>();
+    public List<TileNode> specialRoomTiles = new List<TileNode>();
     public Queue<Tuple<int[], string>> roomsList = new Queue<Tuple<int[], string>>();
 
     public List<RoomNode> Rooms = new List<RoomNode>();
+    public List<RoomNode> SpecialRooms = new List<RoomNode>();
     public List<CorridorNode> Corridors = new List<CorridorNode>();
 
     public bool debugPartition = false;
@@ -79,6 +81,7 @@ public class Map
         columns = Settings.columns; rows = Settings.rows;
         map = new TileNode[columns, rows];
         roomTiles = new List<TileNode>();
+        specialRoomTiles = new List<TileNode>();
         Rooms = new List<RoomNode>();
         Corridors = new List<CorridorNode>();
 
@@ -111,6 +114,7 @@ public class Map
         //queue.Clear();
         roomsList.Clear();
         roomTiles.Clear();
+        specialRoomTiles.Clear();
         Rooms.Clear();
         Corridors.Clear();
 
@@ -142,6 +146,16 @@ public class Map
         {
             room.RemoveCorridors();
         }
+    }
+
+    public void RepurposeSpecialRooms()
+    {
+        Map map = this;
+        foreach(RoomNode room in SpecialRooms)
+        {
+            room.RepurposeRoom(ref map, false);
+        }
+        map.SpecialRooms.Clear();
     }
 
     public void ShuffleRooms()

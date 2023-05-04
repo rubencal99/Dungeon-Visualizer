@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -7,7 +8,9 @@ using Random = UnityEngine.Random;
 public class RoomNode
 {
     // public List<TileNode> tileList= new List<TileNode>();
+    public string[,] stringRepresentation = null;
     public TileNode[,] tileList;
+    //public TileNode[,] specialTileList;
     public List<TileNode> obstacleTileList;
     public List<TileNode> validTileList;
     public TileNode[,] totalTileList;
@@ -26,6 +29,7 @@ public class RoomNode
     public int length;
     public int width;
     public int area;
+    public string PreviousRoomType;
     public string RoomType;
     public int MaxNeighbors;
     public bool isAccessibleFromStart;
@@ -268,7 +272,7 @@ public class RoomNode
         }
     }
 
-    public void RepurposeRoom(ref TileNode[,] map, ref List<TileNode> roomTiles)
+    public void RepurposeRoom(ref Map map, bool isSpecial = true)
     {
         /*foreach(TileNode tile in obstacleTileList)
         {
@@ -278,22 +282,62 @@ public class RoomNode
         }*/
         validTileList.Clear();
         obstacleTileList.Clear();
-        for (int i = 1; i < length - 1; i++)
+        if (isSpecial)
         {
-            for (int j = 1; j < width - 1; j++)
+            for (int i = 1; i < length - 1; i++)
             {
-                TileNode tile = tileList[i, j];
-                tile.isObstacle = false;
-                tile.obstacleValue = "";
-                tile.value = 1;
-                map[tile.x, tile.y].value = 1;
-                map[tile.x, tile.y].room = this;
-                validTileList.Add(tile);
-                if (!roomTiles.Contains(tile))
+                for (int j = 1; j < width - 1; j++)
                 {
-                    roomTiles.Add(tile);
+                    TileNode tile = tileList[i, j];
+                    tile.isObstacle = false;
+                    tile.obstacleValue = "";
+                    tile.value = 1;
+                    map.map[tile.x, tile.y].value = 1;
+                    map.map[tile.x, tile.y].room = this;
+                    validTileList.Add(tile);
+                    if (!map.roomTiles.Contains(tile))
+                    {
+                        map.specialRoomTiles.Add(tile);
+                    }
                 }
             }
+        }
+        else
+        {
+            for (int i = 1; i < length - 1; i++)
+            {
+                for (int j = 1; j < width - 1; j++)
+                {
+                    TileNode tile = tileList[i, j];
+                    int x = tile.x;
+                    int y = tile.y;
+                    //map.map[x, y].room = null;
+                    if (int.TryParse(stringRepresentation[i, j], out int result))
+                    {
+                        map.map[x, y].value = result;
+                        if (result == 1)
+                        {
+                            //map.map[x, y].room = this;
+                            validTileList.Add(map.map[x, y]);
+                        }
+                    }
+                    else
+                    {
+                        map.map[x, y].value = 1;
+                        map.map[x, y].obstacleValue = stringRepresentation[i, j];
+                        map.map[x, y].isObstacle = true;
+                        //map.map[x, y].room = this;
+                        //map.roomTiles.Add(map.map[x, y]);
+                        //tileList[i, j] = map.map[x, y];
+                        //tileCount++;
+                        obstacleTileList.Add(map.map[x, y]);
+
+                    }
+                }
+            }
+            
+            //Array.Clear(specialTileList, 0, specialTileList.Length);
+            RoomType = PreviousRoomType;
         }
     }
 
