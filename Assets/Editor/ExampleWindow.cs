@@ -1,4 +1,5 @@
 using PlasticPipe.PlasticProtocol.Messages;
+using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
@@ -75,6 +76,20 @@ public class GeneratorWindow : EditorWindow
         }
     }
 
+    Texture2D mapTexture = null;
+    public Texture2D MapTexture 
+    { 
+        get { return mapTexture; } 
+        set
+        {
+            if (value != mapTexture)
+            {
+                AssetDatabase.Refresh();
+            }
+            mapTexture = value;
+        } 
+    }
+
     [MenuItem("Window/Map Generator")]
     public static void ShowWindow()
     {
@@ -88,6 +103,7 @@ public class GeneratorWindow : EditorWindow
         if (GUILayout.Button("Generate New Map"))
         {
             MapGenerator.GenerateMap();
+            MapGenerator.GenerateTexture();
         }
         if (GUILayout.Button("Generate New Rooms"))
         {
@@ -96,6 +112,7 @@ public class GeneratorWindow : EditorWindow
         if (GUILayout.Button("Generate New Corridors"))
         {
             MapGenerator.GenerateCorridors();
+            MapGenerator.GenerateTexture();
         }
 
         mapName = EditorGUILayout.TextField("Map Name", mapName);
@@ -108,6 +125,12 @@ public class GeneratorWindow : EditorWindow
         RewardPercent = EditorGUILayout.IntSlider("Reward Percent", rewardPercent, 0, 100);
 
         BossRoomToggle = EditorGUILayout.Toggle("Boss Room", BossRoomToggle);
+
+        GUILayout.Label("Current Map:", EditorStyles.boldLabel);
+        string mapPath = Application.dataPath + Path.AltDirectorySeparatorChar + "Map.png";
+        //MapTexture = (Texture2D)Resources.Load(mapPath, typeof(Texture2D));
+        MapTexture = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Map.png", typeof(Texture2D));
+        GUILayout.Label(MapTexture);
 
         /*if ()
         {

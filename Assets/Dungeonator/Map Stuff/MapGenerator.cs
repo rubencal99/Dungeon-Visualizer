@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using System.Linq;
-using Random = UnityEngine.Random;
+using System.Collections;
+using System.Collections.Generic;
+
+using System.IO;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 
 public static class MapGenerator
@@ -103,6 +103,8 @@ public static class MapGenerator
     private RoomNode ShopRoom;
     private RoomNode DoorRoom;*/
 
+    static string path = Application.dataPath + Path.AltDirectorySeparatorChar + "Map.png";
+
     public static Map GenerateMap()
     {
         Debug.Log("////// STARTING FULL MAP GENERATION //////");
@@ -125,6 +127,10 @@ public static class MapGenerator
 
         Debug.Log("Num Corridors: " + Map.Corridors.Count);
         Debug.Log("////// ENDING GENERATION //////");
+
+        Debug.Log("////// GENERATING IMAGE //////");
+        GenerateTexture();
+        Debug.Log("////// IMAGE COMPLETE //////");
         Debug.Log("");
         Debug.Log("");
         Debug.Log("");
@@ -172,7 +178,12 @@ public static class MapGenerator
 
         RoomGenerator.AddRooms(Map);
         Debug.Log("Add Rooms Complete");
-        
+
+
+        Debug.Log("////// GENERATING IMAGE //////");
+        GenerateTexture();
+        Debug.Log("////// IMAGE COMPLETE //////");
+
 
         Debug.Log("Num Corridors: " + Map.Corridors.Count);
         Debug.Log("////// ENDING ROOM GENERATION //////");
@@ -198,12 +209,104 @@ public static class MapGenerator
 
         Debug.Log("Num Corridors: " + Map.Corridors.Count);
         Debug.Log("////// ENDING CORRIDOR GENERATION //////");
+
+
+        Debug.Log("////// GENERATING IMAGE //////");
+        GenerateTexture();
+        Debug.Log("////// IMAGE COMPLETE //////");
         Debug.Log("");
         Debug.Log("");
         Debug.Log("");
 
         return Map;
     }
+
+    public static void GenerateTexture()
+    {
+        if (Map == null)
+            return;
+
+        //Fill array with shades based on roomtype
+        /*for(int i = 0; i < targetTexture.height; i++)
+        {
+            for(int j = 0; j < targetTexture.width; j++)
+            {
+                byte value = (byte)Random.Range(0, 256);
+                pixels[i + j * targetTexture.width] = new Color32(value, value, value, 255);
+            }
+        }*/
+
+        TileNode[,] map = Map.map;
+        int columns = Map.columns;
+        int rows = Map.rows;
+
+        Texture2D targetTexture = new Texture2D(columns, rows);
+        Color32[] pixels = new Color32[targetTexture.width * targetTexture.height];
+
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                // Debug.Log("(x, y) = (" + x + ", " + y+ ")");
+                if (map[x, y].value == 0 || map[x, y].isObstacle)
+                {
+                    pixels[x + y * targetTexture.width] = new Color32(0, 0, 0, 255);
+                }
+                else if (map[x, y].value == 1 && map[x, y].room != null)
+                {
+                    if (map[x, y].room.RoomType == "Start")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(0, 255, 0, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Boss" || map[x, y].room.RoomType == "Key")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(255, 0, 0, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Door")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(155, 0, 0, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Shop")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(210, 105, 30, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Reward")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(0, 0, 255, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Auxiliary")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(130, 115, 150, 255);
+                    }
+                    else if (map[x, y].room.RoomType == "Extra")
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(150, 150, 0, 255);
+                    }
+                    else
+                    {
+                        pixels[x + y * targetTexture.width] = new Color32(255, 255, 0, 255);
+                    }
+
+                }
+                else
+                {
+                    pixels[x + y * targetTexture.width] = new Color32(0, 255, 255, 255);
+                }
+            }
+        }
+
+        targetTexture.SetPixels32(pixels);
+        targetTexture.Apply();
+
+        byte[] pngData = targetTexture.EncodeToPNG();
+        File.WriteAllBytes(path, pngData);
+        AssetDatabase.Refresh();
+    }
+
+    /*public static Texture2D DrawMap()
+    {
+
+    }*/
     /*void DrawMap()
     {
         AutoTiler.Clear();
@@ -918,7 +1021,7 @@ public static class MapGenerator
        }
     */
 
-    static void OnDrawGizmos()
+    /*static void OnDrawGizmos()
     {
         if (Map == null || Map.map == null)
             return;
@@ -982,5 +1085,5 @@ public static class MapGenerator
                 Gizmos.DrawCube(new Vector3(x, y, 0), new Vector3(1, 1, 1));
             }
         }
-    }
+    }*/
 }

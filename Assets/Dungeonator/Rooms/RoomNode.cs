@@ -4,6 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Random = UnityEngine.Random;
+using System.ComponentModel;
+
+public enum RoomType
+{
+    Start,
+    End,
+    Door,
+    Key,
+    Reward,
+    Shop,
+    Normal,
+    Auxiliary
+}
 
 public class RoomNode
 {
@@ -31,6 +44,7 @@ public class RoomNode
     public int area;
     public string PreviousRoomType;
     public string RoomType;
+    public RoomType Type;
     public int MaxNeighbors;
     public bool isAccessibleFromStart;
     //public EnemySpanwer spawner;

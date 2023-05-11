@@ -145,7 +145,7 @@ public class SettingsInteractor : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    /*void OnDrawGizmos()
     {
         if (MapGenerator.Map == null || MapGenerator.Map.map == null)
             return;
@@ -209,6 +209,6 @@ public class SettingsInteractor : MonoBehaviour
                 Gizmos.DrawCube(new Vector3(x, y, 0), new Vector3(1, 1, 1));
             }
         }
-    }
+    }*/
 
 }
