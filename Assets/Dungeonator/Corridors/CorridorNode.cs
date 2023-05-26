@@ -63,6 +63,7 @@ public class CorridorNode
             //MapGenerator.map[tile.x, tile.y].corridors.Remove(this);
             //if (MapGenerator.map[tile.x, tile.y].corridors.Count > 0)
             map.map[tile.x, tile.y].value = 0;
+            tile.corridors.Remove(this);
         }
         //Debug.Log("Corridor nullified");
     }

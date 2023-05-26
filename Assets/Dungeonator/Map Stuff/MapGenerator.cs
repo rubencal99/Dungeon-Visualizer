@@ -243,54 +243,61 @@ public static class MapGenerator
         Texture2D targetTexture = new Texture2D(columns, rows);
         Color32[] pixels = new Color32[targetTexture.width * targetTexture.height];
 
+        Color32 currentPixel;
+        TileNode currenTile;
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
+                //currentTile = map[x, y];
+                currentPixel = pixels[x + y * targetTexture.width];
                 // Debug.Log("(x, y) = (" + x + ", " + y+ ")");
                 if (map[x, y].value == 0 || map[x, y].isObstacle)
                 {
-                    pixels[x + y * targetTexture.width] = new Color32(0, 0, 0, 255);
+                    currentPixel = new Color32(0, 0, 0, 255);
                 }
                 else if (map[x, y].value == 1 && map[x, y].room != null)
                 {
                     if (map[x, y].room.RoomType == "Start")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(0, 255, 0, 255);
+                        currentPixel = new Color32(0, 255, 0, 255);
                     }
                     else if (map[x, y].room.RoomType == "Boss" || map[x, y].room.RoomType == "Key")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(255, 0, 0, 255);
+                        currentPixel = new Color32(255, 0, 0, 255);
                     }
                     else if (map[x, y].room.RoomType == "Door")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(155, 0, 0, 255);
+                        currentPixel = new Color32(155, 0, 0, 255);
                     }
                     else if (map[x, y].room.RoomType == "Shop")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(210, 105, 30, 255);
+                        currentPixel = new Color32(210, 105, 30, 255);
                     }
                     else if (map[x, y].room.RoomType == "Reward")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(0, 0, 255, 255);
+                        currentPixel = new Color32(0, 0, 255, 255);
                     }
                     else if (map[x, y].room.RoomType == "Auxiliary")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(130, 115, 150, 255);
+                        currentPixel = new Color32(130, 115, 150, 255);
                     }
                     else if (map[x, y].room.RoomType == "Extra")
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(150, 150, 0, 255);
+                        currentPixel = new Color32(150, 150, 0, 255);
                     }
                     else
                     {
-                        pixels[x + y * targetTexture.width] = new Color32(255, 255, 0, 255);
+                        currentPixel = new Color32(255, 255, 0, 255);
                     }
 
                 }
                 else
                 {
-                    pixels[x + y * targetTexture.width] = new Color32(0, 255, 255, 255);
+                    //int count = map[x, y].corridors.Count;
+                    //byte value = 50;
+                    //currentPixel = new Color32(0, value * count, value * count, 255);
+                    currentPixel = new Color32(0, 150, 150, 255);
                 }
             }
         }

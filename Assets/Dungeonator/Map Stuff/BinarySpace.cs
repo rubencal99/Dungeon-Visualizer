@@ -47,6 +47,7 @@ public static class BinarySpace
 
         extraRooms = Settings.extraRooms;
         numExtraRooms = Settings.numExtraRooms;
+        maxExtraRooms = Settings.maxExtraRooms;
 
         rewardPercent= Settings.rewardPercent;
         auxiliaryPercent= Settings.auxiliaryPercent;

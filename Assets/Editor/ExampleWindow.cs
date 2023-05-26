@@ -55,6 +55,18 @@ public class GeneratorWindow : EditorWindow
         }
     }
 
+    bool extraRooms = Settings.extraRooms;
+    public bool ExtraRooms
+    {
+        get { return extraRooms; }
+        set
+        {
+            extraRooms = value;
+            Settings.extraRooms = extraRooms;
+            //Settings.SaveSettings();
+        }
+    }
+
     bool bossRoomToggle = Settings.isBossLevel;
     public bool BossRoomToggle
     {
@@ -124,6 +136,7 @@ public class GeneratorWindow : EditorWindow
         AuxiliaryPercent = EditorGUILayout.IntSlider("Auxiliary Percent", auxiliaryPercent, 0, 100);
         RewardPercent = EditorGUILayout.IntSlider("Reward Percent", rewardPercent, 0, 100);
 
+        ExtraRooms = EditorGUILayout.Toggle("Extra Rooms?", ExtraRooms);
         BossRoomToggle = EditorGUILayout.Toggle("Boss Room", BossRoomToggle);
 
         GUILayout.Label("Current Map:", EditorStyles.boldLabel);

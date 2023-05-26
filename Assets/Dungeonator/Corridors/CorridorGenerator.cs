@@ -212,7 +212,7 @@ public static class CorridorGenerator
         foreach (TileNode c in line)
         {
             DrawCircle(tileList, c, passageSize, ref map);
-            //c.corridors.Add(corridor);
+            c.corridors.Add(corridor);
         }
 
         corridor.tileList = tileList;
@@ -229,7 +229,8 @@ public static class CorridorGenerator
 
         if (map.debugPartition)
             Debug.DrawLine(TileNodeToWorldPoint(tileA), TileNodeToWorldPoint(tileB), Color.green, 25);
-
+        
+        //c.corridors.Add(corridor);
         return corridor;
     }
 
@@ -300,10 +301,10 @@ public static class CorridorGenerator
             {
                 return null;
             }
-            /*if (map[x, y].value == 2)
+            if (map[x, y].value == 2)
             {
                 break;
-            }*/
+            }
 
             if (inverted)
             {
